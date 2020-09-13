@@ -1,0 +1,70 @@
+<!-- templates/customers/index.html -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="container">
+    <h1>Customers</h1>
+
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'customers:new_customer' %}">Add new customer</a>
+    <br />
+    <br />
+    {% endif %}
+    
+
+    <form method="get">
+        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search here" />
+        <button class="btn" type="submit" name="action">Search</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Customer Name</th>
+            <th>Customer Number</th>
+            <th>Created</th>
+            <th>Is Support</th>
+        </tr>
+        {% for c in customers %}
+        <tr onclick="clickLink(this)" data-href="{% url 'customers:customer_info' c.id %}">
+            <td>{{ c.company_name }}</td>
+            <td>{{ c.company_number }}</td>
+            <td>{{ c.created }}</td>
+            <td>{{ c.is_support }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- Pagination buttons -->
+    {% if customers.has_other_pages %}
+    <div class="pagination flex">
+        {% if customers.has_previous %}
+        <a href="?page={{ customers.previous_page_number }}{% if search %}{{ search  }}{% endif %}">
+            <div>&laquo;</div>
+        </a>
+        {% else %}
+        <div class="disabled"><span>&laquo;</span></div>
+        {% endif %}
+        {% for i in customers.paginator.page_range %}
+        {% if customers.number == i %}
+        <div class="active"><span>{{ i }} <span class="sr-only"></span></span></div>
+        {% else %}
+        <a href="?page={{ i }}{% if search %}{{ search  }}{% endif %}"><div>{{ i }}</div></a>
+        {% endif %}
+        {% endfor %}
+
+        {% if customers.has_next %}
+        <a href="?page={{ customers.next_page_number }}{% if search %}{{ search  }}{% endif %}">
+            <div>&raquo;</div>
+        </a>
+        {% else %}
+        <div class="disabled"><span>&raquo;</span></div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
