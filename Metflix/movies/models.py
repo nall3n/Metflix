@@ -6,6 +6,7 @@ from django.db import models
 
 class Movie(models.Model):
     title = models.CharField(max_length= 200)
+    type = models.IntegerField() #Type 1 = Movie 2 = Series
 
     def __str__(self):
         return self.title
@@ -24,3 +25,9 @@ class Genre_targets(models.Model):
     def __str__(self):
         return self.movie.title, self.genre.name
 
+
+class Episode(models.Model):
+    series = models.ForeignKey(Movie, on_delete= models.CASCADE)
+    season = models.IntegerField()
+    episode = models.IntegerField()
+    path = models.CharField(max_lenght = 20)

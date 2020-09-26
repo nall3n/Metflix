@@ -10,4 +10,6 @@ app_name = 'movies'
 urlpatterns = [
 	path('', views.index, name='index'),
     path('<int:movie_id>/', views.media_player, name='media_player'),
+    path('<int:movie_id>/<int:season>/<int:episode>/', views.series_player, name = 'series_player'),
+
 ]
