@@ -1,19 +1,12 @@
-<!-- templates/customers/index.html -->
+<!-- templates/movies/index.html -->
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
 
 
 <div class="container">
-    <h1>Customers</h1>
+    <h1>MittFlix</h1>
 
-
-    {% if user.is_authenticated %}
-    <a href="{% url 'customers:new_customer' %}">Add new customer</a>
-    <br />
-    <br />
-    {% endif %}
-    
 
     <form method="get">
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search here" />
@@ -22,17 +15,17 @@
 
     <table>
         <tr>
-            <th>Customer Name</th>
-            <th>Customer Number</th>
-            <th>Created</th>
-            <th>Is Support</th>
+            <th>Title</th>
+            <th>Type</th>
         </tr>
-        {% for c in customers %}
-        <tr onclick="clickLink(this)" data-href="{% url 'customers:customer_info' c.id %}">
-            <td>{{ c.company_name }}</td>
-            <td>{{ c.company_number }}</td>
-            <td>{{ c.created }}</td>
-            <td>{{ c.is_support }}</td>
+        {% for m in movies %}
+        {% if m.type == 1 %}
+        <tr onclick="clickLink(this)" data-href="{% url 'movies:media_player' m.id %}">
+        {% else %}    
+        <tr onclick="clickLink(this)" data-href="{% url 'movies:episode_select' m.id %}">
+        {% endif %}
+            <td>{{ m.title }}</td>
+            <td>{{ m.type }}</td>
         </tr>
         {% endfor %}
     </table>

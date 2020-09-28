@@ -1,0 +1,17 @@
+<!-- templates/movies/media_player.html -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+
+<video controls>
+	
+	<source src="{{ movie_url }}" type="video/mp4">
+
+</video>
+
+
+
+
+{% endblock %}

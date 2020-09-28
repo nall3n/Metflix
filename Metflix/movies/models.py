@@ -30,4 +30,4 @@ class Episode(models.Model):
     series = models.ForeignKey(Movie, on_delete= models.CASCADE)
     season = models.IntegerField()
     episode = models.IntegerField()
-    path = models.CharField(max_lenght = 20)
+    path = models.CharField(max_length = 20)
