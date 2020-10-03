@@ -14,12 +14,19 @@ import os
 # Create your views here.
 
 def index(request):
-
+    print (MEDIA_ROOT[0])
+    print (MEDIA_ROOT[1])
     movies = Movie.objects.all()
     genres = Genre.objects.all()
+    
+    context = {
+        'test': 'test'
+    }
+
+    return render(request, 'movie_admin/index.html', context)
 
 def add_movies(request):
-    MOVIE_ROOT = os.path.join(MEDIA_ROOT, 'movies')
+    MOVIE_ROOT = os.path.join(os.path.join(MEDIA_ROOT[0], MEDIA_ROOT[1]), 'movies')
 
     # Check movie root dir for new movie folders
     # and adds them to database
@@ -40,8 +47,10 @@ def add_movies(request):
     # Delete from database
     movie_list_db = Movie.objects.all()
     for movie in movie_list_db:
-        if not os.path.isdir(os.path.join( MOVIE_ROOT, movie)):
+        if not os.path.isdir(os.path.join(MOVIE_ROOT, movie.title)):
             movie.delete()
+
+    return HttpResponseRedirect(reverse('movie_admin:index'))
 
 def add_series(request):
 
@@ -68,5 +77,5 @@ def add_series(request):
             episode_db = Episode.objects.all()
             season_db = episode_db.filter()
 
-
+    return HttpResponseRedirect(reverse('movie_admin:index'))
 

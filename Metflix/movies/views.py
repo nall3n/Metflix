@@ -29,11 +29,11 @@ def index(request):
 def episode_select(request, id):
     pass
 
-def media_player(request, id):
+def media_player(request, movie_id):
     
-    movie = get_object_or_404(Movie, pk=id)
+    movie = get_object_or_404(Movie, pk=movie_id)
 
-    for f in os.listdir(MEDIA_ROOT + movie.title):
+    for f in os.listdir(os.path.join(MEDIA_ROOT[0], MEDIA_ROOT[1]) + '/movies/' + movie.title ):
         if f.endswith('.' + 'mp4'):
             movie_url = movie.title +'/' + f
         else:

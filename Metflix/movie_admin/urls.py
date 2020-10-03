@@ -10,5 +10,5 @@ app_name = 'movie_admin'
 urlpatterns = [
 	path('', views.index, name='index'),
     path('add_movies', views.add_movies, name='add_movies'),
-	
+	path('add_series', views.add_series, name='add_series'),
 ]
